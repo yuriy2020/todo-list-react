@@ -7,19 +7,40 @@ export default class TodoListItem extends React.Component {
   constructor() {
     super();
 
-    // после инициализации state его напрямую изменять нельзя 
-    this.state = {
-      done: false
-    };
+    // // this.state инициализируется внутри конструктора (или в теле класса без this)
+    // // после инициализации state его напрямую изменять нельзя 
+    // this.state = {
+    //   done: false
+    // };
 
-    this.onLableClick = () => {
-      // для state можно использовать специальную ф-цию this.setState
-      // и в эту функцию мы можем внести объект с изменениями кооторые хотим внести в state
-      this.setState({
-        done: true
-      })
-    }
+  //   this.onLableClick = () => {
+  //   //  для state можно использовать специальную ф-цию this.setState
+  //   // и в эту функцию мы можем внести объект с изменениями кооторые хотим внести в state
+  //     this.setState({
+  //       done: true
+  //     })
+  //   }
+  }
+  state = {
+    done:false,
+    important: false
+  }
 
+  onLableClick = () => {
+    this.setState((state)=>{  // setState работает асинхронно поэтому state изменяем через callback
+      return{
+        done: !state.done
+      }
+      
+    })
+  }
+
+  onMarkImportant = ()=>{
+    this.setState(({important})=>{   // деструктуризация -вытаскиваем из state.important
+      return{
+        important: !important
+      }
+    })
   }
 
   //ф-ция на клик по списку на прототипе класса
@@ -29,32 +50,37 @@ export default class TodoListItem extends React.Component {
 
   render() {  //отображает туже функцию TodoListItemFunc - скопировал с тела функции
     // одно отличие входные параметры props теперь в this.props
-    const { label, important = false } = this.props;
+    const { label } = this.props;
 
-    const { done } = this.state;
+    const { done, important} = this.state;
 
     let classNames = 'todo-list-item';
     if (done) {
       classNames += ' done'
-    }
-
-    const liStyle = {
-      color: important ? 'tomato' : 'black',
-      fontWeight: important ? 'bold' : 'normal'
     };
 
+    if (important){
+      classNames = 'todo-list-item';
+      classNames += ' important'
+    }
 
+    // const liStyle = {
+    //   color: important ? 'tomato' : 'black',
+    //   fontWeight: important ? 'bold' : 'normal'
+    // };
+    
     return (
       <span className={classNames}
-        style={liStyle}
+        // style={liStyle}
         onClick={this.onLableClick   // Добавление св-во  onClick (onBlur, onMouseOver...)
           // .bind(this)
         }
       > {label}
 
         <button type="button"
-          className="btn btn-outline-success btn-sm float-right">
-          <i className="fa fa-exclamation" />
+          className="btn btn-outline-success btn-sm float-right"
+          onClick ={this.onMarkImportant}>
+          <i className="fa fa-exclamation"/>
         </button>
         <button type="button"
           className="btn btn-outline-danger btn-sm float-right">
