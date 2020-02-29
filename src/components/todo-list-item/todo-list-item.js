@@ -91,7 +91,7 @@ export default class TodoListItem extends React.Component {
   }
 }
 
-// функциональный способ  (когда мы переделали в классы - функцию можно уудалить.заккоментил)
+// функциональный способ  (когда мы переделали в классы - функцию можно удалить.заккоментил)
 // const TodoListItemFunc = ({ label, important = false }) => {
 //   const liStyle = {
 //     color: important ? 'tomato' : 'black',
