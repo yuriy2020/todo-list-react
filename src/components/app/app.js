@@ -15,9 +15,9 @@ class MyApp extends React.Component {
 
     state = {
         todoData: [
-            { label: 'Drink coffeeeee', important: false, id: 1 },
-            { label: 'Make Awesome App', important: true, id: 2 },
-            { label: 'Have a lunch', important: false, id: 3 },
+            { label: 'Drink coffeeeee', important: false, id: 1, done: false },
+            { label: 'Make Awesome App', important: false, id: 2, done: false },
+            { label: 'Have a lunch', important: false, id: 3, done: false },
         ],
         isLogged: false,
         loginBox: <span>Log in please</span>,
@@ -64,13 +64,37 @@ class MyApp extends React.Component {
         };
         // add in array
         this.setState(({ todoData }) => {
-            const newArray = [...todoData ,newItem];
+            const newArray = [...todoData, newItem];
             // newArray.push(newItem) //то же самое
             return {
                 todoData: newArray
             }
         })
 
+    };
+
+    onToggleDone_1 = (id) => {
+        this.setState(({ todoData }) => {
+            const idx = todoData.findIndex(el => el.id === id)
+            const oldItem = todoData[idx]
+            const newAItem = {
+                ...oldItem,
+                done: !oldItem.done
+            };
+            const newArray = [
+                ...todoData.slice(0, idx),
+                newAItem,
+                ...todoData.slice(idx + 1)
+            ];
+
+            return{
+                todoData:newArray
+            }
+        })
+    };
+
+    onToggleImportant_1 = (id) => {
+        console.log('onTogleImportant', id)
     }
 
 
@@ -86,7 +110,11 @@ class MyApp extends React.Component {
                 <div>
                     <TodoList todos={this.state.todoData}
                         // onDeleted={(id) => this.deleteItem(id)}
+
+                        // отсюда все передаем в пропсах в todo-list
                         onDeleted={this.deleteItem1}
+                        onToggleDone_2={this.onToggleDone_1}
+                        onToggleImportant_2={this.onToggleImportant_1}
                     />
                 </div>
                 <div>

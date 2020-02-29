@@ -13,28 +13,32 @@ import './todo-list.css'
 //     {label: 'Make Awesome App', important: true, id:2},
 //     {label: 'Have a lunch', important: false, id:3},
 // ];
-const TodoList = ({ todos, onDeleted ,AddItem}) => {
+
+
+const TodoList = ({ todos, onDeleted, onToggleDone_2, onToggleImportant_2 }) => {  // получаем из пропсов app.js
     const elements = todos.map((item) => {
         const { id, ...itemProps } = item; // деструктуризация  
         // ...itemProps - rest parameters (которые не были деструктир сразу -все кроме id)
         // 
         return (
-            <li key={id} className = "list-group-item">
+            <li key={id} className="list-group-item">
                 <TodoListItem {...itemProps}  // сюда не попадает id 
-            // spread-оператор делает тоже самое
-            // label={item.label}
-            // important={item.important}
-            // id = {item.id}
+                    // spread-оператор делает тоже самое
+                    // label={item.label}
+                    // important={item.important}
+                    // id = {item.id}
 
-            // onDeleted = {()=>console.log("Deleted", id)}
-            onDeleted = {()=> onDeleted(id)}
-            AddItem = {()=>AddItem(todos)}
-            />
+                    // onDeleted = {()=>console.log("Deleted", id)}
+                    onDeleted={() => onDeleted(id)}
+                    onToggleDone_3={()=>onToggleDone_2(id)}
+                    onToggleImportant_3={()=>onToggleImportant_2(id)}
+
+                />
             </li>
         )
     });
     return (
-        <ul className = "list-group todo-list">
+        <ul className="list-group todo-list">
             {elements}
         </ul>
     )
