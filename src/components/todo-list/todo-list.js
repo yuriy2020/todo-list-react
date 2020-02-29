@@ -1,6 +1,8 @@
 import React from 'react';
 
 import TodoListItem from '../todo-list-item';
+// import AddItem from '../AddItem/AddItem';
+
 
 import './todo-list.css'
 
@@ -11,7 +13,7 @@ import './todo-list.css'
 //     {label: 'Make Awesome App', important: true, id:2},
 //     {label: 'Have a lunch', important: false, id:3},
 // ];
-const TodoList = ({ todos }) => {
+const TodoList = ({ todos, onDeleted ,AddItem}) => {
     const elements = todos.map((item) => {
         const { id, ...itemProps } = item; // деструктуризация  
         // ...itemProps - rest parameters (которые не были деструктир сразу -все кроме id)
@@ -23,7 +25,12 @@ const TodoList = ({ todos }) => {
             // label={item.label}
             // important={item.important}
             // id = {item.id}
-            /></li>
+
+            // onDeleted = {()=>console.log("Deleted", id)}
+            onDeleted = {()=> onDeleted(id)}
+            AddItem = {()=>AddItem(todos)}
+            />
+            </li>
         )
     });
     return (

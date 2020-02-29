@@ -13,31 +13,31 @@ export default class TodoListItem extends React.Component {
     //   done: false
     // };
 
-  //   this.onLableClick = () => {
-  //   //  для state можно использовать специальную ф-цию this.setState
-  //   // и в эту функцию мы можем внести объект с изменениями кооторые хотим внести в state
-  //     this.setState({
-  //       done: true
-  //     })
-  //   }
+    //   this.onLableClick = () => {
+    //   //  для state можно использовать специальную ф-цию this.setState
+    //   // и в эту функцию мы можем внести объект с изменениями кооторые хотим внести в state
+    //     this.setState({
+    //       done: true
+    //     })
+    //   }
   }
   state = {
-    done:false,
+    done: false,
     important: false
   }
 
   onLableClick = () => {
-    this.setState((state)=>{  // setState работает асинхронно поэтому state изменяем через callback
-      return{
-        done: !state.done
+    this.setState((state) => {  // setState работает асинхронно поэтому state изменяем через callback
+      return {
+        done: !state.done  // без деструктуризации - запихал весь state в  setState
       }
-      
+
     })
   }
 
-  onMarkImportant = ()=>{
-    this.setState(({important})=>{   // деструктуризация -вытаскиваем из state.important
-      return{
+  onMarkImportant = () => {
+    this.setState(({ important }) => {   // деструктуризация -вытаскиваем из state.important
+      return {
         important: !important
       }
     })
@@ -52,14 +52,14 @@ export default class TodoListItem extends React.Component {
     // одно отличие входные параметры props теперь в this.props
     const { label } = this.props;
 
-    const { done, important} = this.state;
+    const { done, important } = this.state;
 
     let classNames = 'todo-list-item';
     if (done) {
       classNames += ' done'
     };
 
-    if (important){
+    if (important) {
       classNames = 'todo-list-item';
       classNames += ' important'
     }
@@ -68,7 +68,7 @@ export default class TodoListItem extends React.Component {
     //   color: important ? 'tomato' : 'black',
     //   fontWeight: important ? 'bold' : 'normal'
     // };
-    
+
     return (
       <span className={classNames}
         // style={liStyle}
@@ -78,13 +78,14 @@ export default class TodoListItem extends React.Component {
       > {label}
 
         <button type="button"
-          className="btn btn-outline-success btn-sm float-right"
-          onClick ={this.onMarkImportant}>
-          <i className="fa fa-exclamation"/>
+          onClick={this.onMarkImportant}
+          className="btn btn-outline-success btn-sm float-right">
+          <i className="fa fa-exclamation" />
         </button>
         <button type="button"
+          onClick={this.props.onDeleted}
           className="btn btn-outline-danger btn-sm float-right">
-          <i className="fa fa-trash-o" />
+          <i className="fa fa-trash-o" /> 
         </button>
       </span>
     )
